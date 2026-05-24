@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>DataSasa</title>
+
+<style>
+:root{
+  --primary:#16a34a;
+  --secondary:#22c55e;
+  --dark:#14532d;
+  --light:#f0fdf4;
+  --white:#ffffff;
+  --gray:#666;
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  font-family:Segoe UI, sans-serif;
+  background:linear-gradient(180deg,#14532d,#16a34a,#22c55e);
+  min-height:100vh;
+  color:#111;
+}
+
+header{
+  text-align:center;
+  padding:20px;
+  color:white;
+  font-size:28px;
+  font-weight:800;
+  letter-spacing:1px;
+  box-shadow:0 4px 10px rgba(0,0,0,0.2);
+}
+
+.sub-header{
+  text-align:center;
+  color:white;
+  margin-top:-5px;
+  margin-bottom:20px;
+  font-size:14px;
+}
+
+.container{
+  max-width:850px;
+  margin:auto;
+  padding:20px;
+}
+
+.hero{
+  background:white;
+  padding:20px;
+  border-radius:20px;
+  text-align:center;
+  margin-bottom:25px;
+  box-shadow:0 6px 20px rgba(0,0,0,0.15);
+}
+
+.hero h1{
+  color:var(--dark);
+  margin-bottom:8px;
+}
+
+.hero p{
+  color:var(--gray);
+}
+
+.bundle-grid{
+  display:grid;
+  gap:18px;
+}
+
+.bundle-card{
+  background:white;
+  border-radius:18px;
+  padding:18px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  transition:.3s;
+  box-shadow:0 6px 20px rgba(0,0,0,0.1);
+  border-left:8px solid var(--primary);
+}
+
+.bundle-card:hover{
+  transform:translateY(-5px);
+  box-shadow:0 10px 25px rgba(0,0,0,0.18);
+}
+
+.bundle-left h2{
+  color:var(--dark);
+  margin-bottom:5px;
+  font-size:22px;
+}
+
+.bundle-left p{
+  color:var(--gray);
+  font-size:14px;
+}
+
+.badge{
+  display:inline-block;
+  margin-top:8px;
+  background:var(--light);
+  color:var(--dark);
+  padding:4px 10px;
+  border-radius:30px;
+  font-size:12px;
+  font-weight:700;
+}
+
+.bundle-right{
+  text-align:right;
+}
+
+.price{
+  font-size:24px;
+  color:var(--dark);
+  font-weight:800;
+  margin-bottom:10px;
+}
+
+.buy-btn{
+  border:none;
+  background:linear-gradient(90deg,var(--secondary),var(--primary));
+  color:white;
+  padding:12px 18px;
+  border-radius:12px;
+  font-weight:700;
+  cursor:pointer;
+  transition:.3s;
+}
+
+.buy-btn:hover{
+  opacity:.9;
+}
+
+.support{
+  background:white;
+  margin-top:25px;
+  padding:20px;
+  border-radius:18px;
+  text-align:center;
+  box-shadow:0 6px 20px rgba(0,0,0,0.12);
+}
+
+.support a{
+  color:var(--dark);
+  text-decoration:none;
+  font-weight:700;
+}
+
+.popup{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.65);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  z-index:999;
+}
+
+.popup.show{
+  display:flex;
+}
+
+.modal{
+  background:white;
+  width:100%;
+  max-width:520px;
+  border-radius:20px;
+  padding:25px;
+  animation:pop .25s ease;
+}
+
+@keyframes pop{
+  from{
+    opacity:0;
+    transform:scale(.95);
+  }
+  to{
+    opacity:1;
+    transform:scale(1);
+  }
+}
+
+.modal h2{
+  color:var(--dark);
+  margin-bottom:10px;
+}
+
+.modal p{
+  color:var(--gray);
+  margin-bottom:15px;
+}
+
+.input-group{
+  margin-bottom:15px;
+}
+
+.input-group label{
+  display:block;
+  margin-bottom:6px;
+  font-weight:700;
+}
+
+.input-group input{
+  width:100%;
+  padding:14px;
+  border-radius:10px;
+  border:1px solid #ccc;
+  outline:none;
+  font-size:16px;
+}
+
+.instructions{
+  background:var(--light);
+  padding:15px;
+  border-radius:12px;
+  margin-top:15px;
+}
+
+.instructions li{
+  margin-bottom:10px;
+}
+
+.pay-btn{
+  width:100%;
+  margin-top:18px;
+  border:none;
+  padding:15px;
+  border-radius:12px;
+  background:linear-gradient(90deg,var(--secondary),var(--primary));
+  color:white;
+  font-size:18px;
+  font-weight:800;
+  cursor:pointer;
+}
+
+.close-btn{
+  margin-top:10px;
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:10px;
+  background:#eee;
+  cursor:pointer;
+  font-weight:700;
+}
+
+.loading{
+  display:none;
+  text-align:center;
+  margin-top:10px;
+  color:var(--dark);
+  font-weight:700;
+}
+
+.footer{
+  text-align:center;
+  color:white;
+  padding:25px;
+  font-size:14px;
+}
+
+@media(max-width:700px){
+
+  .bundle-card{
+    flex-direction:column;
+    align-items:flex-start;
+    gap:15px;
+  }
+
+  .bundle-right{
+    width:100%;
+    text-align:left;
+  }
+
+  .buy-btn{
+    width:100%;
+  }
+
+}
+</style>
+</head>
+
+<body>
+
+<header>DataSasa</header>
+
+<div class="sub-header">
+Safaricom • Airtel • Telkom
+</div>
+
+<div class="container">
+
+<div class="hero">
+<h1>Affordable Internet Packages</h1>
+<p>Fast activation • Secure payment • Instant delivery</p>
+</div>
+
+<div class="bundle-grid">
+
+<!-- PACKAGE CARD -->
+<div class="bundle-card">
+<div class="bundle-left">
+<h2>1.5GB • 3 HOURS</h2>
+<p>Perfect for quick browsing and social media</p>
+<span class="badge">Popular</span>
+</div>
+
+<div class="bundle-right">
+<div class="price">Ksh 55</div>
+
+<button class="buy-btn"
+onclick="openPopup('1.5GB • 3 HOURS','55')">
+Buy Package
+</button>
+</div>
+</div>
+
+<!-- PACKAGE CARD -->
+<div class="bundle-card">
+<div class="bundle-left">
+<h2>5GB • 24 HOURS</h2>
+<p>Great for streaming and downloads</p>
+<span class="badge">Best Seller</span>
+</div>
+
+<div class="bundle-right">
+<div class="price">Ksh 90</div>
+
+<button class="buy-btn"
+onclick="openPopup('5GB • 24 HOURS','90')">
+Buy Package
+</button>
+</div>
+</div>
+
+<!-- PACKAGE CARD -->
+<div class="bundle-card">
+<div class="bundle-left">
+<h2>8GB • 3 DAYS</h2>
+<p>Reliable package for daily usage</p>
+<span class="badge">Hot Deal</span>
+</div>
+
+<div class="bundle-right">
+<div class="price">Ksh 155</div>
+
+<button class="buy-btn"
+onclick="openPopup('8GB • 3 DAYS','155')">
+Buy Package
+</button>
+</div>
+</div>
+
+<!-- PACKAGE CARD -->
+<div class="bundle-card">
+<div class="bundle-left">
+<h2>12GB • 7 DAYS</h2>
+<p>Weekly browsing and entertainment</p>
+<span class="badge">Recommended</span>
+</div>
+
+<div class="bundle-right">
+<div class="price">Ksh 180</div>
+
+<button class="buy-btn"
+onclick="openPopup('12GB • 7 DAYS','180')">
+Buy Package
+</button>
+</div>
+</div>
+
+<!-- PACKAGE CARD -->
+<div class="bundle-card">
+<div class="bundle-left">
+<h2>18GB • 21 DAYS</h2>
+<p>For heavy internet users</p>
+<span class="badge">Premium</span>
+</div>
+
+<div class="bundle-right">
+<div class="price">Ksh 225</div>
+
+<button class="buy-btn"
+onclick="openPopup('18GB • 21 DAYS','225')">
+Buy Package
+</button>
+</div>
+</div>
+
+<!-- PACKAGE CARD -->
+<div class="bundle-card">
+<div class="bundle-left">
+<h2>25GB • 30 DAYS</h2>
+<p>Monthly package with stable speeds</p>
+<span class="badge">Monthly</span>
+</div>
+
+<div class="bundle-right">
+<div class="price">Ksh 299</div>
+
+<button class="buy-btn"
+onclick="openPopup('25GB • 30 DAYS','299')">
+Buy Package
+</button>
+</div>
+</div>
+
+<!-- PACKAGE CARD -->
+<div class="bundle-card">
+<div class="bundle-left">
+<h2>Unlimited • 30 DAYS</h2>
+<p>Unlimited browsing and streaming</p>
+<span class="badge">Unlimited</span>
+</div>
+
+<div class="bundle-right">
+<div class="price">Ksh 350</div>
+
+<button class="buy-btn"
+onclick="openPopup('Unlimited • 30 DAYS','350')">
+Buy Package
+</button>
+</div>
+</div>
+
+<!-- PACKAGE CARD -->
+<div class="bundle-card">
+<div class="bundle-left">
+<h2>45GB • 60 DAYS</h2>
+<p>Long-term package with extra value</p>
+<span class="badge">Mega Deal</span>
+</div>
+
+<div class="bundle-right">
+<div class="price">Ksh 450</div>
+
+<button class="buy-btn"
+onclick="openPopup('45GB • 60 DAYS','450')">
+Buy Package
+</button>
+</div>
+</div>
+
+<!-- PACKAGE CARD -->
+<div class="bundle-card">
+<div class="bundle-left">
+<h2>268GB • LIMITED</h2>
+<p>Extreme package for professionals</p>
+<span class="badge">Ultimate</span>
+</div>
+
+<div class="bundle-right">
+<div class="price">Ksh 950</div>
+
+<button class="buy-btn"
+onclick="openPopup('268GB • LIMITED','950')">
+Buy Package
+</button>
+</div>
+</div>
+
+</div>
+
+<div class="support">
+<h3>Email Support</h3>
+<p>
+<a href="mailto:shopikabundles256@gmail.com">
+ikariesboogie@gmail.com
+</a>
+</p>
+</div>
+
+</div>
+
+<!-- POPUP -->
+<div class="popup" id="popup">
+
+<div class="modal">
+
+<h2>Complete Payment</h2>
+
+<p id="selectedPackage"></p>
+
+<div class="input-group">
+<label>Phone Number</label>
+
+<input
+type="tel"
+id="phone"
+placeholder="07XXXXXXXX"
+/>
+</div>
+
+<div class="input-group">
+<label>Amount</label>
+
+<input
+type="text"
+id="amount"
+readonly
+/>
+</div>
+
+<div class="instructions">
+
+<ol>
+<li>Enter your Safaricom number</li>
+<li>Click Proceed To Payment</li>
+<li>Wait for M-PESA STK Push</li>
+<li>Enter your M-PESA PIN</li>
+<li>Wait for package activation</li>
+</ol>
+
+</div>
+
+<button class="pay-btn" onclick="makePayment()">
+Proceed To Payment
+</button>
+
+<div class="loading" id="loading">
+Processing payment...
+</div>
+
+<button class="close-btn" onclick="closePopup()">
+Cancel
+</button>
+
+</div>
+
+</div>
+
+<div class="footer">
+© 2026 Paysmart KE • All Rights Reserved
+</div>
+
+<script>
+
+function openPopup(plan,price){
+
+document.getElementById("popup")
+.classList.add("show");
+
+document.getElementById("selectedPackage")
+.innerHTML =
+"<strong>Selected:</strong> " + plan;
+
+document.getElementById("amount")
+.value = "Ksh " + price;
+
+}
+
+function closePopup(){
+
+document.getElementById("popup")
+.classList.remove("show");
+
+}
+
+window.onclick = function(e){
+
+const popup = document.getElementById("popup");
+
+if(e.target === popup){
+closePopup();
+}
+
+}
+
+document.addEventListener("keydown",function(e){
+
+if(e.key === "Escape"){
+closePopup();
+}
+
+});
+
+function makePayment(){
+
+const phone =
+document.getElementById("phone").value;
+
+if(phone.length < 10){
+
+alert("Please enter a valid phone number");
+
+return;
+
+}
+
+document.getElementById("loading")
+.style.display = "block";
+
+setTimeout(function(){
+
+window.location.href =
+"https://me.nestlink.co.ke/Ikariesboogie";
+
+},2000);
+
+}
+
+</script>
+
+</body>
+</html>
