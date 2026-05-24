@@ -1,0 +1,434 @@
+<!-- SAVE THIS FILE AS: admin.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DataSasa Admin Dashboard</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Segoe UI,sans-serif;
+}
+
+body{
+background:#f5f7fb;
+display:flex;
+min-height:100vh;
+}
+
+.sidebar{
+width:250px;
+background:#14532d;
+color:white;
+padding:20px;
+position:fixed;
+top:0;
+left:0;
+bottom:0;
+}
+
+.logo{
+font-size:24px;
+font-weight:800;
+margin-bottom:40px;
+text-align:center;
+}
+
+.menu{
+display:flex;
+flex-direction:column;
+gap:15px;
+}
+
+.menu a{
+text-decoration:none;
+color:white;
+padding:14px;
+border-radius:10px;
+transition:.3s;
+font-weight:600;
+}
+
+.menu a:hover{
+background:#22c55e;
+}
+
+.main{
+margin-left:250px;
+padding:25px;
+width:100%;
+}
+
+.topbar{
+background:white;
+padding:18px;
+border-radius:16px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+box-shadow:0 4px 12px rgba(0,0,0,0.08);
+margin-bottom:25px;
+}
+
+.topbar h1{
+color:#14532d;
+}
+
+.cards{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:20px;
+margin-bottom:25px;
+}
+
+.card{
+background:white;
+padding:25px;
+border-radius:18px;
+box-shadow:0 4px 12px rgba(0,0,0,0.08);
+}
+
+.card h3{
+color:#666;
+margin-bottom:10px;
+}
+
+.card h2{
+color:#14532d;
+font-size:32px;
+}
+
+.orders{
+background:white;
+padding:20px;
+border-radius:18px;
+box-shadow:0 4px 12px rgba(0,0,0,0.08);
+overflow-x:auto;
+margin-bottom:25px;
+}
+
+.orders h2{
+margin-bottom:20px;
+color:#14532d;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+}
+
+table th{
+background:#22c55e;
+color:white;
+padding:14px;
+text-align:left;
+}
+
+table td{
+padding:14px;
+border-bottom:1px solid #eee;
+}
+
+.status{
+padding:6px 12px;
+border-radius:30px;
+font-size:12px;
+font-weight:700;
+display:inline-block;
+}
+
+.success{
+background:#dcfce7;
+color:#166534;
+}
+
+.pending{
+background:#fef9c3;
+color:#854d0e;
+}
+
+.failed{
+background:#fee2e2;
+color:#991b1b;
+}
+
+.action-btn{
+border:none;
+padding:8px 12px;
+border-radius:8px;
+cursor:pointer;
+font-weight:700;
+color:white;
+}
+
+.activate{
+background:#16a34a;
+}
+
+.delete{
+background:#dc2626;
+}
+
+.bundle-manager{
+background:white;
+padding:20px;
+border-radius:18px;
+box-shadow:0 4px 12px rgba(0,0,0,0.08);
+}
+
+.bundle-manager h2{
+margin-bottom:20px;
+color:#14532d;
+}
+
+.bundle-form{
+display:grid;
+gap:15px;
+}
+
+.bundle-form input{
+padding:14px;
+border-radius:10px;
+border:1px solid #ccc;
+outline:none;
+}
+
+.bundle-form button{
+padding:14px;
+border:none;
+background:#16a34a;
+color:white;
+font-weight:700;
+border-radius:10px;
+cursor:pointer;
+}
+
+.logout{
+background:#dc2626;
+color:white;
+padding:10px 18px;
+border:none;
+border-radius:10px;
+cursor:pointer;
+font-weight:700;
+}
+
+@media(max-width:768px){
+
+.sidebar{
+width:80px;
+padding:10px;
+}
+
+.logo{
+font-size:14px;
+}
+
+.menu a{
+font-size:11px;
+padding:10px;
+text-align:center;
+}
+
+.main{
+margin-left:80px;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<script>
+
+const password = prompt("Enter Admin Password");
+
+if(password !== "boogiecoin#314"){
+
+document.body.innerHTML = `
+<div style="
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+font-size:30px;
+font-weight:800;
+color:red;
+">
+ACCESS DENIED
+</div>
+`;
+
+throw new Error("Unauthorized");
+
+}
+
+</script>
+
+<div class="sidebar">
+
+<div class="logo">
+DATASASA
+</div>
+
+<div class="menu">
+
+<a href="#">Dashboard</a>
+<a href="#">Orders</a>
+<a href="#">Payments</a>
+<a href="#">Bundles</a>
+<a href="#">Users</a>
+<a href="#">Analytics</a>
+<a href="#">Settings</a>
+
+</div>
+
+</div>
+
+<div class="main">
+
+<div class="topbar">
+
+<h1>Admin Dashboard</h1>
+
+<button class="logout"
+onclick="logout()">
+Logout
+</button>
+
+</div>
+
+<div class="cards">
+
+<div class="card">
+<h3>Total Orders</h3>
+<h2>1,248</h2>
+</div>
+
+<div class="card">
+<h3>Total Revenue</h3>
+<h2>Ksh 245K</h2>
+</div>
+
+<div class="card">
+<h3>Active Users</h3>
+<h2>842</h2>
+</div>
+
+<div class="card">
+<h3>Pending Payments</h3>
+<h2>18</h2>
+</div>
+
+</div>
+
+<div class="orders">
+
+<h2>Recent Orders</h2>
+
+<table>
+
+<tr>
+<th>Phone</th>
+<th>Bundle</th>
+<th>Amount</th>
+<th>Status</th>
+<th>Action</th>
+</tr>
+
+<tr>
+<td>0712345678</td>
+<td>5GB • 24 HOURS</td>
+<td>Ksh 90</td>
+<td>
+<span class="status success">
+PAID
+</span>
+</td>
+<td>
+<button class="action-btn activate">
+Activate
+</button>
+</td>
+</tr>
+
+<tr>
+<td>0798765432</td>
+<td>Unlimited • 30 DAYS</td>
+<td>Ksh 350</td>
+<td>
+<span class="status pending">
+PENDING
+</span>
+</td>
+<td>
+<button class="action-btn delete">
+Delete
+</button>
+</td>
+</tr>
+
+<tr>
+<td>0700000000</td>
+<td>45GB • 60 DAYS</td>
+<td>Ksh 450</td>
+<td>
+<span class="status failed">
+FAILED
+</span>
+</td>
+<td>
+<button class="action-btn delete">
+Delete
+</button>
+</td>
+</tr>
+
+</table>
+
+</div>
+
+<div class="bundle-manager">
+
+<h2>Add New Bundle</h2>
+
+<div class="bundle-form">
+
+<input type="text" placeholder="Bundle Name">
+
+<input type="text" placeholder="Bundle Price">
+
+<input type="text" placeholder="Bundle Duration">
+
+<button>
+Add Bundle
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+function logout(){
+
+alert("Logged Out");
+
+window.location.href = "/";
+
+}
+
+</script>
+
+</body>
+</html>
